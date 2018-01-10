@@ -1,18 +1,13 @@
 class StocksController < ApplicationController
   
   def search
-    if params[:stock].present?
+    if params[:stock].blank?
+      flash.now[:danger]="You have entered an empty search. Please enter a valid stock ticker symbol."
+    else  
       @stock = Stock.new_from_lookup(params[:stock])
-      if @stock
-       render partial: 'users/result'
-      else
-       flash[:danger]="You have entered an invalid symbol."
-       redirect_to my_portfolio_path
-      end
-    else
-      flash[:danger]="You have entered an empty search. Please enter a valid stock ticker symbol."
-      redirect_to my_portfolio_path
+      flash.now[:danger]="You have entered an invalid symbol." unless @stock
     end
+    render partial: 'users/result'
   end
 
 end
