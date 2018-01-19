@@ -3,4 +3,13 @@ class UsersController < ApplicationController
     @user = current_user
     @user_stocks = current_user.stocks
   end
+  
+  def my_friends
+    @friendships = current_user.friends
+  end
+  
+  def search
+    @users = User.search(params[:search_param])
+    render json: @users
+  end
 end
