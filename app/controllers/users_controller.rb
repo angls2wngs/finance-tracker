@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   def my_portfolio
     @user = current_user
-    @user_stocks = current_user.stocks
+    @user_stocks = current_user.stocks.order('name')
   end
   
   def my_friends
-    @friendships = current_user.friends
+    @friendships = current_user.friends.order('first_name ASC')
   end
   
   def search
@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     else  
       @users = User.search(params[:search_param])
       @users = current_user.except_current_users(@users)
+      @users = User.order('first_name ASC')
       flash.now[:danger]="No users match this search criteria." if @users.blank?
     end
     render partial: 'friends/result'
@@ -34,5 +35,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @user_stocks = @user.stocks
+  end
+  
+  def index
+    @users = User.order('first_name ASC')
   end
 end
