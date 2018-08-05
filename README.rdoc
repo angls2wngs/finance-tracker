@@ -1,3 +1,4 @@
 == README
 
 This is the Finance Tracker App for the Complete Ruby on Rails Developer Course. 
+Final project can be found at https://rgt-finance-tracker.herokuapp.com/
